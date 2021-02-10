@@ -150,15 +150,29 @@ namespace Oxide.Plugins
             if (channel == null)
                 return;
 
-            Embed embed = new Embed
+            if (messageType == (int)MessageType.TeamChat) {
+                channel.CreateMessage(Client, $":busts_in_silhouette: [Team]{message}");
+            }
+            else if (messageType == (int)MessageType.ClanChat)
             {
-                title = $"Clan Log - {(MessageType)messageType}",
-                description = message,
-                color = logSettings.GetColor,
-                footer = new Embed.Footer { text = $"{DateTime.Now.ToLongDateString()}, {DateTime.Now.ToLongTimeString()}" }
-            };
+                channel.CreateMessage(Client, $":busts_in_silhouette: [Clan]{message}");
+            }
+            else if (messageType == (int)MessageType.AllyChat)
+            {
+                channel.CreateMessage(Client, $":busts_in_silhouette: [Ally]{message}");
+            }
+            else
+            {  
+                Embed embed = new Embed
+                {
+                    title = $"Clan Log - {(MessageType)messageType}",
+                    description = message,
+                    color = logSettings.GetColor,
+                    footer = new Embed.Footer { text = $"{DateTime.Now.ToLongDateString()}, {DateTime.Now.ToLongTimeString()}" }
+                };
 
-            channel.CreateMessage(Client, embed);            
+                channel.CreateMessage(Client, embed);
+            }            
         }
         #endregion
 
